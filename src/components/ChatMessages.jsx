@@ -15,7 +15,7 @@ If power will be run to the gazebo, check the path between it and the power sour
 
 This information has been retrieved from a how-to guide provided by Home Depot. Please refer to it for your project:
 https://www.homedepot.com/c/ah/how-to-build-a-gazebo/9ba683603be9fa5395fab901c5b2f155`,
-` I am following this guide now, but frustratingly it does not suggest where I should get the wood for the frame or the shingles for the roof. Suggest some product options for me.`,
+`I am following this guide now, but frustratingly it does not suggest where I should get the wood for the frame or the shingles for the roof. Suggest some product options for me.`,
 `Here is a great wood post that Home Depot carries:
 Pressure-Treated Ground Contact Southern Line Timber Wood Post
 https://www.homedepot.com/p/6-in-x-6-in-x-16-ft-2-Pressure-Treated-Ground-Contact-Southern-Line-Timber-Wood-Post-261023/100042343

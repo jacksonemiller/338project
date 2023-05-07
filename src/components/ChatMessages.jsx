@@ -3,7 +3,28 @@ import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 //const script = ['hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi', 'hi']
 
-const script = [`I want to build a gazebo, but I’m not sure how to make an informed site selection decision. Could you help me out?`,
+const script = [`I want to make a gazebo, but I’m not sure how to go about it. Could you help me out?`,
+`Sure, I can definitely help you with that! Building a gazebo can be a fun and rewarding project, and with the right guidance, it can be a relatively simple task. Here are some steps to help you get started:
+
+1. Choose a location: The first step in building a gazebo is to decide where you want to place it. You will need to choose a level area that is free from obstructions and has good drainage. Make sure the location is also accessible from your home or other areas of your property.
+
+2. Design your gazebo: Once you have chosen your location, you will need to design your gazebo. There are many different styles of gazebos, so choose one that fits your needs and your personal taste. You can find gazebo plans online or create your own design.
+
+3. Gather materials: Once you have a design, you will need to gather materials. You will need wood for the frame and roof, concrete footings or blocks, screws, nails, and roofing materials. You may also need tools such as a circular saw, drill, and level.
+
+4. Build the frame: The next step is to build the frame of your gazebo. You will need to cut the wood to the correct lengths and angles according to your design. Use screws and nails to secure the pieces together.
+
+5. Install the roof: Once the frame is complete, you can install the roof. Depending on your design, you may use shingles, tiles, or another roofing material. Make sure the roof is properly installed to ensure it is weatherproof.
+
+6. Finish the gazebo: Finally, you can finish your gazebo with any additional features you desire. You may want to add a railing, seating, or decorative touches.
+
+7. Building a gazebo requires some skill, time, and effort, but it is a great way to enhance the beauty and functionality of your outdoor space. 
+
+Alternatively you could check out this guide provided by the Home Depot site that goes into detail about building a gazebo:
+
+https://www.homedepot.com/c/ah/how-to-build-a-gazebo/9ba683603be9fa5395fab901c5b2f155
+`
+,`I’m not sure how to make an informed site selection decision. Could you help me out?`,
 `Sure, I can definitely help you with that! Before you build a gazebo, check local laws and zoning regulations to see if you need a building permit.
 
 Site selection is important when building a gazebo. Choose an area that is level or that you can make level. You’ll also need to consider potential obstacles and safety concerns.
@@ -11,10 +32,9 @@ Before building any outdoor structure, contact your local utility company to che
 Also be aware of overhead lines. Don’t build your gazebo directly underneath any overhead utility lines.
 Consider any trees in the area that might need to be trimmed or removed in the future. It may be better to do that work prior to construction.
 If a septic system is present, check the property diagrams for location of the tank and drain field. Do not build over either of these.
-If power will be run to the gazebo, check the path between it and the power source to ensure that a wire can be buried.
+If power will be run to the gazebo, check the path between it and the power source to ensure that a wire can be buried.`
 
-This information has been retrieved from a how-to guide provided by Home Depot. Please refer to it for your project:
-https://www.homedepot.com/c/ah/how-to-build-a-gazebo/9ba683603be9fa5395fab901c5b2f155`,
+,
 `I am following this guide now, but frustratingly it does not suggest where I should get the wood for the frame or the shingles for the roof. Suggest some product options for me.`,
 `Here is a great wood post that Home Depot carries:
 Pressure-Treated Ground Contact Southern Line Timber Wood Post

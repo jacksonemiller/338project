@@ -16,7 +16,7 @@ const Chatbox = () => {
       setCurrMessage(currMessage => currMessage + 1);
     }
 
-    if (currMessage == 1 || currMessage == 3) {
+    if (currMessage % 2 != 0) {
       delayedUpdate();
     }
   }, [currMessage]);

@@ -1,6 +1,8 @@
 import openai
 import os
 from serpapi import GoogleSearch
+import ast
+
 
 from dotenv import load_dotenv, find_dotenv
 _ = load_dotenv(find_dotenv())
@@ -58,10 +60,15 @@ product_name, description, usefulness."
 """
 response = get_completion(prompt)
 print("Completion for Text 1:")
-print(response)
 
+res = response.split('\n\n')[1]
 
-# res = response.strip('][').split(', ')
+string_of_dictionaries = f"[{res}]"
+
+# Convert the string to a list of dictionaries
+list_of_dictionaries = ast.literal_eval(string_of_dictionaries)
+
+print(list_of_dictionaries[0]['product_name'])
 
 # for product in res:
 #     print(product)

@@ -68,28 +68,33 @@ string_of_dictionaries = f"[{res}]"
 # Convert the string to a list of dictionaries
 list_of_dictionaries = ast.literal_eval(string_of_dictionaries)
 
-print(list_of_dictionaries[0]['product_name'])
 
-# for product in res:
-#     print(product)
-#     query_name = product['product_name']
+queried = []
+urls = []
 
-#     params = {
-#       "engine": "home_depot",
-#       "q": f"""{query_name}""",
-#       "api_key": "06fb4f4032ed1164e073f96d5dc2964c04a03e07f2f6ede876b6a2fe35af526f"
-#     }
+for product in list_of_dictionaries:
+    print(product)
+    query_name = product['product_name']
 
-#     search = GoogleSearch(params)
-#     results = search.get_dict()
-#     products = results["products"]
+    params = {
+      "engine": "home_depot",
+      "q": f"""{query_name}""",
+      "api_key": "06fb4f4032ed1164e073f96d5dc2964c04a03e07f2f6ede876b6a2fe35af526f"
+    }
 
-#     queried = []
-#     urls = []
-#     for i in range(2):
-#         queried.append(products[i]['title'])
-#         urls.append(products[i]['link'])
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    products = results["products"]
 
+    
+    for i in range(2):
+        queried.append(products[i]['title'])
+        urls.append(products[i]['link'])
 
-#     print(queried)
-#     print(urls)
+print("Results after searching company api:")
+
+for i in range(len(queried)):
+    print("Product:")
+    print(queried[i])
+    print("url:")
+    print(urls[i])

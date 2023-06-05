@@ -10,22 +10,23 @@ const Chatbox = () => {
     setMessages([...messages, msg])
   }
 
-  const queryBot = (prompt) => {
+  const queryBot = (prompt, cache) => {
     fetch("http://127.0.0.1:8000/chatbot/",
           {method: 'PUT', body: prompt}
     ).then(response => {
       return response.text();
     }).then(text => {
-      setMessages(prev => [...prev, prompt, text])
+      setMessages([...cache, prompt, text])
       //appendMessage(text);
     });
   }
 
   const updateEverything = () => {
-    //appendMessage(inputText)
-    const cache = inputText
+    const prompt = inputText
+    const msgCache = messages
+    appendMessage(inputText)
     setInputText('')
-    queryBot(cache)
+    queryBot(prompt, msgCache)
   }
 
   return (<div style={{borderStyle: 'solid',

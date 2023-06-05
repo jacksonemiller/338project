@@ -1,31 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import ChatMessages from './ChatMessages';
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+import React, { useState } from 'react';
+import ChatMsg from '@mui-treasury/components/chatMsg/ChatMsg';
 
 const Chatbox = () => {
   
   const [inputText, setInputText] = useState('');
-  const [currMessage, setCurrMessage] = useState(0);
+  const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    async function delayedUpdate() {
-      await delay(2000);
-      setCurrMessage(currMessage => currMessage + 1);
-    }
+  const appendMessage = (msg) => {
+    setMessages([...messages, msg])
+  }
 
-    if (currMessage % 2 != 0) {
-      delayedUpdate();
-    }
-  }, [currMessage]);
+  const queryBot = (prompt) => {
+    fetch("http://127.0.0.1:8000/chatbot/",
+          {method: 'PUT', body: prompt}
+    ).then(response => {
+      return response.text();
+    }).then(text => {
+      setMessages(prev => [...prev, prompt, text])
+      //appendMessage(text);
+    });
+  }
+
+  const updateEverything = () => {
+    //appendMessage(inputText)
+    const cache = inputText
+    setInputText('')
+    queryBot(cache)
+  }
 
   return (<div style={{borderStyle: 'solid',
                        overflow: 'auto',
                        height: '500px',
                        width: '1000px'}}>
-    <ChatMessages currMessage={currMessage}/>
+    <div style={{height: '95%', whiteSpace: 'pre-line'}}>
+    {
+      messages.map((message, index) => (
+      <ChatMsg
+        side={!(index % 2) ? 'right' : 'left'}
+        avatar={''}
+        messages={[message]}
+      />))
+    }
+    </div>
     <input
       style={{position: 'absolute',
               bottom: '0',
@@ -33,11 +49,10 @@ const Chatbox = () => {
               width: '40%'}}
       type="text"
       value={inputText}
-      onChange={(e) => { setInputText(e.target.value)}}
+      onChange={(e) => {setInputText(e.target.value)}}
       onKeyDown={(e) => {
         if (e.key === 'Enter') {
-          setInputText('');
-          setCurrMessage(currMessage + 1)
+          updateEverything();
         }
       }}/>
   </div>

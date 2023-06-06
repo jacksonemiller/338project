@@ -12,12 +12,14 @@ const Chatbox = () => {
 
   const queryBot = (prompt, cache) => {
     fetch("http://127.0.0.1:8000/chatbot/",
-          {method: 'PUT', body: prompt}
+          {method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          }, body: JSON.stringify([...messages, prompt])}
     ).then(response => {
       return response.text();
     }).then(text => {
       setMessages([...cache, prompt, text])
-      //appendMessage(text);
     });
   }
 

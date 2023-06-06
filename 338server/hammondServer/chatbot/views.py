@@ -4,10 +4,23 @@ from django.views.decorators.csrf import csrf_exempt
 import openai
 import ast
 from serpapi import GoogleSearch
+import json
 
-def go(userQuery):
+def go(prevContext):
   openai.api_key  = "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"
 
+  context = [ {'role':'system', 'content':"""
+  You are a customer service chatbot for Home Depot. \
+  You first greet the customer, then answer the question they ask. \
+  Follow the instructions below only if the customer asks for a list of products or materials OR the customer asks about how to build or construct a product or project or some sort: \
+  For each product generate its name, a short description, and how it can be useful towards building the user project
+  Provide them only in JSON format with the following keys: 
+  product_name, description, usefulness.//
+  Make sure to place brackets "[]" if the products are generated.
+
+
+
+  """} ]  # accumulate messages
 
   def get_completion(prompt, model="gpt-3.5-turbo"):
       messages = [{"role": "user", "content": prompt}]
@@ -18,52 +31,21 @@ def go(userQuery):
       )
       return response.choices[0].message["content"]
 
-
-  def get_completion_from_messages(messages, model="gpt-3.5-turbo", temperature=0):
+  def get_completion_from_messages(model="gpt-3.5-turbo", temperature=0):
       response = openai.ChatCompletion.create(
           model=model,
-          messages=messages,
+          messages=context,
           temperature=temperature, # this is the degree of randomness of the model's output
       )
-  #     print(str(response.choices[0].message))
       return response.choices[0].message["content"]
+  
+  def restoreContext():
+     for i, message in enumerate(prevContext):
+        context.append({'role': 'assistant' if i & 1 else 'user', 'content':f"{message}"})
 
-
-
-  def collect_messages(prompt_input):
-      prompt = prompt_input
-      
-      response = determine_response(context, prompt)
-      context.append({'role':'assistant', 'content':f"{response}"})
-      
-      return response
-
-
-
-  def determine_response(context, prompt):
-
-
-      respond_check = f"""
-        You will be provided with a prompt delimited by triple quotes. \
-        If the prompt asks how to build or create something then just return the number "0" \
-        If it asks for anything else just return the number "1" \
-
-        \"\"\"{prompt}\"\"\"
-        """
-
-
-      # response3 = get_completion(respond_check)
-
-      # response = ""
-
-
-      # if response3 == "0":
-
-      #   prompt = prompt + "and give me a list of materials"
-        
-
-      context.append({'role':'user', 'content':f"{prompt}"})
-      response = get_completion_from_messages(context)
+  def determine_response():
+      restoreContext()
+      response = get_completion_from_messages()
 
       first = response.find("[")
 
@@ -71,27 +53,21 @@ def go(userQuery):
 
       third = response.find("{")
 
-
       if first != -1 and second != -1 and third != -1:
 
         # # # Convert the string to a list of dictionaries
         list_of_dictionaries = ast.literal_eval(response[first:second + 1])
 
-        # print(type(res))
-        # print(res)
-        # print(list_of_dictionaries)
-
         queried = []
         urls = []
 
         for product in list_of_dictionaries:
-            # print(product)
             query_name = product['product_name']
 
             params = {
                 "engine": "home_depot",
                 "q": f"""{query_name}""",
-                "api_key": "25c5c0cd662e1c50684ac8c330e55a093b198ba102d5439b998966f5f3044b55"
+                "api_key": "ef10768766cf26648e072489b207d1f5abf3358b840592d1facb19e54bde3388"
             }
 
             search = GoogleSearch(params)
@@ -111,7 +87,7 @@ def go(userQuery):
 
         \"\"\"{queried}\"\"\"
         \"\"\"{urls}\"\"\"
-        \"\"\"{prompt}\"\"\"
+        \"\"\"{prevContext[-1]}\"\"\"
 
         To begin with:
         Provide a list of instructions that is about two sentances or more on how to build the product listed in the prompt. \
@@ -134,33 +110,13 @@ def go(userQuery):
 
         response2 = get_completion(respond_with_products_prompt)
         return response2
-
       else:
-
-
         return response
 
-
-  context = [ {'role':'system', 'content':"""
-  You are a customer service chatbot for Home Depot. \
-  You first greet the customer, then answer the question they ask. \
-  Follow the instructions below only if the customer asks for a list of products or materials OR the customer asks about how to build or construct a product or project or some sort: \
-  For each product generate its name, a short description, and how it can be useful towards building the user project
-  Provide them only in JSON format with the following keys: 
-  product_name, description, usefulness.//
-  Make sure to place brackets "[]" if the products are generated.
-
-
-
-  """} ]  # accumulate messages
-
-
-  #input prompt and get the response
-  return collect_messages(userQuery)
+  return determine_response()
 
 @csrf_exempt
 def index(request):
     if request.method == 'PUT':
-        data = request.body.decode('utf-8')
-        return HttpResponse(go(data))
-    return HttpResponse("Hello, world. You're at the polls index.")
+        return HttpResponse(go(json.loads(request.body.decode('utf-8'))))
+    return HttpResponse("End point not implemented.")

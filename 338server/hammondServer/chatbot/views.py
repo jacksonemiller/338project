@@ -41,9 +41,9 @@ def go(prevContext):
   
   def restoreContext():
      for i, message in enumerate(prevContext):
-        context.append({'role': 'assitant' if i & 1 else 'user', 'content':f"{message}"})
+        context.append({'role': 'assistant' if i & 1 else 'user', 'content':f"{message}"})
 
-  def determine_response(context, prompt):
+  def determine_response():
       restoreContext()
       response = get_completion_from_messages()
 
@@ -67,7 +67,7 @@ def go(prevContext):
             params = {
                 "engine": "home_depot",
                 "q": f"""{query_name}""",
-                "api_key": "25c5c0cd662e1c50684ac8c330e55a093b198ba102d5439b998966f5f3044b55"
+                "api_key": "ef10768766cf26648e072489b207d1f5abf3358b840592d1facb19e54bde3388"
             }
 
             search = GoogleSearch(params)

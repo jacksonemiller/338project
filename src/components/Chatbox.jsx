@@ -15,7 +15,7 @@ const Chatbox = () => {
           {method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
-          }, body: [...messages, prompt]}
+          }, body: JSON.stringify([...messages, prompt])}
     ).then(response => {
       return response.text();
     }).then(text => {
